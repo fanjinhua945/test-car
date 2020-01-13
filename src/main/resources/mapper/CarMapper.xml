@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+	例如namespace="com.szh.mapper.personMapper"就是com.szh.mapper(包名)+personMapper(personMapper.xml文件去除后缀) -->
+<mapper namespace="com.fh.mapper.CarMapper">
+
+    <sql id="whereSql">
+        <where>
+
+
+        </where>
+    </sql>
+
+    <select id="queryCarList" parameterType="ConditionQuery" resultType="Car">
+        select * from t_car
+        <include refid="whereSql"></include>
+        limit #{start},#{length}
+    </select>
+
+    <select id="queryCarCount" parameterType="ConditionQuery" resultType="Long">
+        select count(*) from t_car
+        <include refid="whereSql"></include>
+    </select>
+
+    <insert id="addCar" parameterType="Car">
+        insert into t_car (name,typeId,brandId,saleVolume,stock,produceDate)
+        values (#{name},#{typeId},#{brandId},#{saleVolume},#{stock},#{produceDate});
+    </insert>
+
+    <delete id="deleteCar" parameterType="Integer">
+        delete from t_car
+        where id= #{whatever}
+    </delete>
+
+    <select id="queryCarById" parameterType="Integer" resultType="Car">
+        select * from t_car
+        where id=#{id}
+    </select>
+
+    <update id="updateCar" parameterType="Car">
+        update t_car set
+          name=#{name},typeId=#{typeId},brandId=#{brandId},saleVolume=#{saleVolume},stock=#{stock},produceDate=#{produceDate}
+      where id = #{id}
+    </update>
+
+    <select id="queryTypeList" resultType="Type">
+        select * from t_type
+    </select>
+
+    <select id="queryAreaList" resultType="Area">
+        select * from t_areas
+    </select>
+    
+</mapper>
